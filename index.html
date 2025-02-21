@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script type="module" src="/src/main.js"></script> -->
+    <title>Pharmacy Inventory Management System</title>
+  </head>
+  <body>
+    <header>
+      <h1>Pharmacy Inventory Management System</h1>
+    </header>
+    <main>
+      <section class="sortFilter">
+        <div class="search-container">
+          <label for="search">Search</label>
+          <input type="search" name="search" id="search" maxlength="25" />
+        </div>
+        <div class="filter-container">
+          <label for="filter">Filter</label>
+          <select name="filter" id="filter">
+            <option value="alphabetically">alphabetically</option>
+            <option value="reverse">reverse</option>
+          </select>
+        </div>
+      </section>
+      <section class="inventory">
+        <ul>
+          <li>
+            <div class="medicine__details">
+              <h3 class="medicine__name">Paracet</h3>
+              <div class="medicine__manufacturer-container">
+                <span class="medicine__manufacturer-label">Manufacturer:</span>
+                <span class="medicine__manufacturer">Bob Inc</span>
+              </div>
+              <div class="medicine__expiration-date-container">
+                <span class="medicine__expiration-date-label">Expiration date:</span>
+                <span class="medicine__expiration-date">10. Des. 2025</span>
+              </div>
+              <div class="medicine__quantity-container">
+                <span class="medicine__quantity-label">Quantity:</span>
+                <span class="medicine__quantity">50</span>
+              </div>
+              <div class="medicine__category-container">
+                <span class="medicine__category-label">Medicine category:</span>
+                <span class="medicine__category">Oral medication</span>
+              </div>
+            </div>
+            <div class="medicine__editDelete">
+              <button class="medicine__edit">🖋️</button>
+              <button class="medicine__delete">🗑️</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer>Checkout code at <a href="https://github.com/sbraende/">GitHub</a></footer>
+    <div class="add-modal">
+      <h2 class="form__title">Add medicine</h2>
+      <form>
+        <div class="form__group">
+          <label for="name">Name</label>
+          <input
+            class="form__name-input"
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter medicine name"
+            maxlength="30"
+          />
+        </div>
+        <div class="form__group">
+          <label for="manufacturer">Manufacturer</label>
+          <input
+            class="form__manufacturer-input"
+            type="text"
+            name="manufacturer"
+            id="manufacturer"
+            maxlength="25"
+            placeholder="Enter manufacturer name"
+          />
+        </div>
+        <div class="form__group">
+          <label for="expiration-date">Expiration date</label>
+          <input
+            class="form__expiration-date-input"
+            type="text"
+            name="expiration-date"
+            id="expiration-date"
+            maxlength="25"
+            placeholder="Enter expiration date"
+          />
+        </div>
+        <div class="form__group">
+          <label for="quantity">Quantity</label>
+          <input type="number" name="quantity" id="quantity" placeholder="Enter quantity number" min="0" max="2000" />
+        </div>
+        <div class="form__group">
+          <label for="medicine-category">Medicine-category</label>
+          <select name="medicine-category" id="medicine-category">
+            <option value="oral">Oral medication</option>
+            <option value="injectable">Injectable medication</option>
+            <option value="topical">Topical medication</option>
+            <!-- <option value="Inhalable">Inhalable medication</option> -->
+          </select>
+        </div>
+        <!-- Oral medication  -->
+        <div class="form__oral-medicaiton">
+          <fieldset class="form__category">
+            <legend>Oral medication details</legend>
+            <div class="form__group">
+              <label for="absorption-rate">Absorption rate</label>
+              <input
+                class="form__absorption-rate-input"
+                type="text"
+                name="absorption-rate"
+                id="absorption-rate"
+                maxlength="25"
+                placeholder="E.g. fast, slow, extended-realise"
+              />
+            </div>
+            <div class="form__group">
+              <label for="food-interaction">Food interaction</label>
+              <input
+                class="form__food-interaction-input"
+                type="text"
+                name="food-interaction"
+                id="food-interaction"
+                maxlength="25"
+                placeholder="E.g. take with food, take on an empty stomach"
+              />
+            </div>
+          </fieldset>
+        </div>
+        <!-- Injectable medication  -->
+        <div class="form__injectable-medication">
+          <fieldset class="form__category">
+            <legend>Injectable medication details</legend>
+            <div class="form__group">
+              <label for="injection-site">Injection site</label>
+              <input
+                class="form__injection-site-input"
+                type="text"
+                name="injection-site"
+                id="injection-site"
+                maxlength="25"
+                placeholder="E.g. arm, thigh, abdomen"
+              />
+            </div>
+            <div class="form__group">
+              <label for="onset-time">Onset time</label>
+              <input
+                class="form__onset-time-input"
+                type="text"
+                name="onset-time"
+                id="onset-time"
+                maxlength="25"
+                placeholder="E.g. immediate, 30 minutes, 1 hour"
+              />
+            </div>
+          </fieldset>
+        </div>
+        <!-- Topical medication  -->
+        <div class="form__topical-medicaiton">
+          <fieldset class="form__category">
+            <legend>Topical medication details</legend>
+            <div class="form__group">
+              <label for="absorption-level">Absortption level</label>
+              <input
+                class="form__absorption-level-input"
+                type="text"
+                name="absorption-level"
+                id="absorption-level"
+                maxlength="25"
+                placeholder="E.g. surface level, deep tissue"
+              />
+            </div>
+            <div class="form__group">
+              <label for="residue-type">Residue type</label>
+              <input
+                class="form__residue-type-input"
+                type="text"
+                name="residue-type"
+                id="residue-type"
+                maxlength="25"
+                placeholder="E.g. oily, non-greasy"
+              />
+            </div>
+          </fieldset>
+        </div>
+        <p class="form__error-message">xxx is not working</p>
+        <button class="form__accept-button" type="submit">Accept</button>
+        <button class="form__cancel-button">Cancel</button>
+      </form>
+    </div>
+    <div class="delete-modal">
+      <div class="delete-modal__container">
+        <p class="delete-modal__text">Are you sure you want to delete?</p>
+        <div class="delete-modal__button-container">
+          <button class="delete-modal__confirm">Confirm</button>
+          <button class="delete-modal__cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
