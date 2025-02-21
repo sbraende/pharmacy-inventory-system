@@ -1,0 +1,70 @@
+.site-header {
+  max-width: 680px;
+  width: 80%;
+  padding: var(--spacing-large) 0;
+}
+
+.site-main {
+  max-width: 680px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+
+.sortFilter {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inventory {
+  width: 100%;
+}
+
+.medicine-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+
+.medicine {
+  width: 100%;
+  padding: var(--spacing-medium) var(--spacing-medium);
+  border-radius: var(--border-radius-medium);
+  display: flex;
+  background-color: var(--color-light-gray);
+}
+
+.medicine__details {
+  flex-basis: 80%;
+}
+
+.medicine__name {
+  padding-bottom: var(--spacing-medium);
+}
+
+.medicine__detail-label {
+  font-weight: 600;
+}
+
+.medicine__editDelete {
+  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+  align-items: flex-end;
+}
+
+.medicine__edit,
+.medicine__delete {
+  width: 50px;
+  height: 50px;
+  font-size: var(--font-size-large);
+}
+
+.site-footer {
+  padding-top: var(--spacing-large);
+  padding-bottom: 4rem;
+}
