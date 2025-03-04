@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- <script type="module" src="/src/main.js"></script> -->
     <link rel="stylesheet" href="./src/css/styles.css" />
-    <title>Pharmacy Inventory System</title>
+    <title>Pharmacy Inventory System ⚕️</title>
   </head>
   <body>
     <header class="site-header">
-      <h1>Pharmacy Inventory System</h1>
+      <h1>Pharmacy Inventory System ⚕️</h1>
     </header>
     <main class="site-main">
-      <section class="sortFilter">
+      <!-- <section class="sortFilter">
         <div class="search-container">
           <label for="search">Search</label>
           <input type="search" name="search" id="search" maxlength="25" />
@@ -25,7 +25,7 @@
             <option value="reverse">reverse</option>
           </select>
         </div>
-      </section>
+      </section> -->
       <section class="inventory">
         <ul class="medicine-list">
           <li class="medicine">
@@ -80,13 +80,19 @@
           </li>
         </ul>
       </section>
+      <section class="add-button-container">
+        <button class="add-button">Add Entry ➕</button>
+      </section>
     </main>
     <footer class="site-footer">
-      <p>Checkout code at <a class="link" href="https://github.com/sbraende/">GitHub</a></p>
+      <p>
+        Made by Sebastian Braende. Checkout source code at
+        <a class="link" href="https://github.com/sbraende/">GitHub</a>
+      </p>
     </footer>
-    <div class="add-modal hide">
-      <h2 class="form__title">Add medicine</h2>
-      <form>
+    <div class="add-modal">
+      <form class="form">
+        <h2 class="form__title">Add medicine</h2>
         <div class="form__group">
           <label for="name">Name</label>
           <input
@@ -96,6 +102,7 @@
             id="name"
             placeholder="Enter medicine name"
             maxlength="30"
+            required
           />
         </div>
         <div class="form__group">
@@ -107,6 +114,7 @@
             id="manufacturer"
             maxlength="25"
             placeholder="Enter manufacturer name"
+            required
           />
         </div>
         <div class="form__group">
@@ -118,15 +126,25 @@
             id="expiration-date"
             maxlength="25"
             placeholder="Enter expiration date"
+            required
           />
         </div>
         <div class="form__group">
           <label for="quantity">Quantity</label>
-          <input type="number" name="quantity" id="quantity" placeholder="Enter quantity number" min="0" max="2000" />
+          <input
+            type="number"
+            name="quantity"
+            id="quantity"
+            placeholder="Enter quantity number"
+            min="0"
+            max="2000"
+            required
+          />
         </div>
         <div class="form__group">
           <label for="medicine-category">Medicine-category</label>
           <select name="medicine-category" id="medicine-category">
+            <option value="">Select category</option>
             <option value="oral">Oral medication</option>
             <option value="injectable">Injectable medication</option>
             <option value="topical">Topical medication</option>
@@ -217,14 +235,14 @@
             </div>
           </fieldset>
         </div>
-        <p class="form__error-message">xxx is not working</p>
+        <p class="form__error-message">Form error message</p>
         <button class="form__accept-button" type="submit">Accept</button>
-        <button class="form__cancel-button">Cancel</button>
+        <button class="form__cancel-button" type="button">Cancel</button>
       </form>
     </div>
-    <div class="delete-modal hide">
+    <div class="delete-modal">
       <div class="delete-modal__container">
-        <p class="delete-modal__text">Are you sure you want to delete?</p>
+        <p class="delete-modal__text">Are you sure you want to delete entry?</p>
         <div class="delete-modal__button-container">
           <button class="delete-modal__confirm">Confirm</button>
           <button class="delete-modal__cancel">Cancel</button>

@@ -64,7 +64,20 @@
   font-size: var(--font-size-large);
 }
 
+/* footer */
 .site-footer {
   padding-top: var(--spacing-large);
   padding-bottom: 4rem;
+}
+
+/* add button */
+.add-button-container {
+  position: fixed;
+  bottom: var(--spacing-large);
+  right: var(--spacing-large);
+}
+
+.add-button {
+  padding: var(--spacing-medium);
+  font-size: var(--font-size-large);
 }
