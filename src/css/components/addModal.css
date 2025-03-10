@@ -46,3 +46,8 @@
   color: red;
   text-align: center;
 }
+
+.form__error-field {
+  border: 2px solid red;
+  border-radius: var(--border-radius-small);
+}

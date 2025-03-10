@@ -102,7 +102,6 @@
             id="name"
             placeholder="Enter medicine name"
             maxlength="30"
-            required
           />
         </div>
         <div class="form__group">
@@ -114,40 +113,36 @@
             id="manufacturer"
             maxlength="25"
             placeholder="Enter manufacturer name"
-            required
           />
         </div>
         <div class="form__group">
           <label for="expiration-date">Expiration date</label>
           <input
             class="form__expiration-date-input"
-            type="text"
+            type="date"
             name="expiration-date"
             id="expiration-date"
-            maxlength="25"
-            placeholder="Enter expiration date"
-            required
           />
         </div>
         <div class="form__group">
           <label for="quantity">Quantity</label>
           <input
+            class="form__quantity-input"
             type="number"
             name="quantity"
             id="quantity"
             placeholder="Enter quantity number"
             min="0"
             max="2000"
-            required
           />
         </div>
         <div class="form__group">
           <label for="medicine-category">Medicine-category</label>
-          <select name="medicine-category" id="medicine-category">
-            <option value="">Select category</option>
-            <option value="oral">Oral medication</option>
-            <option value="injectable">Injectable medication</option>
-            <option value="topical">Topical medication</option>
+          <select name="medicine-category" id="medicine-category" class="form__medicine-category">
+            <option value="">Select Category</option>
+            <option value="oral">Oral Medication</option>
+            <option value="injectable">Injectable Medication</option>
+            <option value="topical">Topical Medication</option>
             <!-- <option value="Inhalable">Inhalable medication</option> -->
           </select>
         </div>
@@ -235,7 +230,7 @@
             </div>
           </fieldset>
         </div>
-        <p class="form__error-message">Form error message</p>
+        <p class="form__error-message hide">Form error message</p>
         <button class="form__accept-button" type="submit">Accept</button>
         <button class="form__cancel-button" type="button">Cancel</button>
       </form>

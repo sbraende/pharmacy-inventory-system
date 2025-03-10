@@ -1,7 +1,5 @@
-import AddModal from "./components/addModal";
+import AddModal from "./addModal";
 
 document.addEventListener("DOMContentLoaded", () => {
-  new AddModal();
-  // AddModal.showAddModal();
-  // AddModal.hideAddModal();
+  AddModal.init();
 });
