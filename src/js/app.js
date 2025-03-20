@@ -1,5 +1,4 @@
-import AddModal from "./addModal";
-
+import UI from "./ui";
 document.addEventListener("DOMContentLoaded", () => {
-  AddModal.init();
+  UI.init();
 });

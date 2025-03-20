@@ -1,7 +1,12 @@
-import { v4 as uuidv4 } from "uuid";
+import { Medicine } from "./medicineClasses";
+import Validate from "./validation";
 
 class MedicineManager {
-  static medicineList = JSON.parse(localStorage.getItem("medicineList")) || [];
+  static medicineList = this.getMedicine();
+
+  static getMedicine() {
+    return JSON.parse(localStorage.getItem("medicineList") || []);
+  }
 
   static addMedicine(
     nameInput,
@@ -10,15 +15,21 @@ class MedicineManager {
     quantityInput,
     categorySelect
   ) {
-    const medicine = {
-      productName: "productName",
-      productId: uuidv4(),
-      manufacturer: "manufacturerName",
-      expirationDate: new Date("2025-03-20").toISOString(),
-      quantity: 0,
-    };
-    localStorage.setItem("medicineList", JSON.stringify(medicine));
-    console.log("item added:", medicine);
+    if (!Validate.validateForm()) {
+      return;
+    }
+
+    this.medicineList = this.getMedicine();
+    const medicine = new Medicine(
+      nameInput.value.trim(),
+      manufacturerInput.value.trim(),
+      new Date(expirationDateInput.value).toISOString(),
+      quantityInput.value,
+      categorySelect.value
+    );
+    this.medicineList.push(medicine);
+    localStorage.setItem("medicineList", JSON.stringify(this.medicineList));
+    // render interface
   }
 }
 

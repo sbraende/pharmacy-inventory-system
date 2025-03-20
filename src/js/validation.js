@@ -1,6 +1,6 @@
-class InputForm {
-  static submitForm(e) {
-    e.preventDefault();
+class Validate {
+  static validateForm() {
+    let isValid = true;
     const fieldsToValidate = [
       {
         name: "name",
@@ -29,23 +29,23 @@ class InputForm {
       const fieldInputError = document.querySelector(`.form__${field.name}-error`);
       const formErrorMessage = document.querySelector(".form__error-message");
 
+      formErrorMessage.classList.remove("form__error-message--show");
+      formErrorMessage.textContent = "";
+
       if (!fieldInputElement.value.trim()) {
         fieldInputError.classList.add("form__input-error--show");
         fieldInputError.textContent = field.message;
 
         formErrorMessage.classList.add("form__error-message--show");
         formErrorMessage.textContent = "Please fill out highlighted fields";
-        return;
+        isValid = false;
       } else {
         fieldInputError.classList.remove("form__input-error--show");
         fieldInputError.textContent = "";
-
-        formErrorMessage.classList.remove("form__error-message--show");
-        formErrorMessage.textContent = "";
       }
     });
-    console.log("Form submitted");
+    return isValid;
   }
 }
 
-export default InputForm;
+export default Validate;
