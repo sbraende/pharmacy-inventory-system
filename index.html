@@ -90,6 +90,7 @@
         <a class="link" href="https://github.com/sbraende/">GitHub</a>
       </p>
     </footer>
+    <!-- Add modal -->
     <div class="add-modal">
       <form class="form">
         <h2 class="form__title">Add medicine</h2>
@@ -103,6 +104,7 @@
             placeholder="Enter medicine name"
             maxlength="30"
           />
+          <p class="form__name-error form__input-error"></p>
         </div>
         <div class="form__group">
           <label for="manufacturer">Manufacturer</label>
@@ -114,6 +116,7 @@
             maxlength="25"
             placeholder="Enter manufacturer name"
           />
+          <p class="form__manufacturer-error form__input-error"></p>
         </div>
         <div class="form__group">
           <label for="expiration-date">Expiration date</label>
@@ -123,6 +126,7 @@
             name="expiration-date"
             id="expiration-date"
           />
+          <p class="form__expiration-date-error form__input-error"></p>
         </div>
         <div class="form__group">
           <label for="quantity">Quantity</label>
@@ -135,6 +139,7 @@
             min="0"
             max="2000"
           />
+          <p class="form__quantity-error form__input-error"></p>
         </div>
         <div class="form__group">
           <label for="medicine-category">Medicine-category</label>
@@ -145,6 +150,7 @@
             <option value="topical">Topical Medication</option>
             <!-- <option value="Inhalable">Inhalable medication</option> -->
           </select>
+          <p class="form__medicine-category-error form__input-error"></p>
         </div>
         <!-- Oral medication  -->
         <div class="form__oral-medicaiton">
@@ -160,6 +166,7 @@
                 maxlength="25"
                 placeholder="E.g. fast, slow, extended-realise"
               />
+              <p class="form__absorption-rate-error form__input-error"></p>
             </div>
             <div class="form__group">
               <label for="food-interaction">Food interaction</label>
@@ -171,6 +178,7 @@
                 maxlength="25"
                 placeholder="E.g. take with food, take on an empty stomach"
               />
+              <p class="form__food-interaction-error form__input-error"></p>
             </div>
           </fieldset>
         </div>
@@ -188,6 +196,7 @@
                 maxlength="25"
                 placeholder="E.g. arm, thigh, abdomen"
               />
+              <p class="form__injection-site-error form__input-error"></p>
             </div>
             <div class="form__group">
               <label for="onset-time">Onset time</label>
@@ -199,6 +208,7 @@
                 maxlength="25"
                 placeholder="E.g. immediate, 30 minutes, 1 hour"
               />
+              <p class="form__onset-time-error form__input-error"></p>
             </div>
           </fieldset>
         </div>
@@ -216,6 +226,7 @@
                 maxlength="25"
                 placeholder="E.g. surface level, deep tissue"
               />
+              <p class="form__absorption-level-error form__input-error"></p>
             </div>
             <div class="form__group">
               <label for="residue-type">Residue type</label>
@@ -227,10 +238,11 @@
                 maxlength="25"
                 placeholder="E.g. oily, non-greasy"
               />
+              <p class="form__residue-type-error form__input-error"></p>
             </div>
           </fieldset>
         </div>
-        <p class="form__error-message hide">Form error message</p>
+        <p class="form__error-message">Form error message</p>
         <button class="form__accept-button" type="submit">Accept</button>
         <button class="form__cancel-button" type="button">Cancel</button>
       </form>

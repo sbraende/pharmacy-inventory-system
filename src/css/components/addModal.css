@@ -1,5 +1,4 @@
 .add-modal {
-  /* TODO: Fix add-modal hide in JS */
   display: none;
   width: 100%;
   height: 100%;
@@ -9,7 +8,6 @@
   top: 0;
   left: 0;
 
-  /* display: flex; */
   flex-direction: column;
   align-items: center;
 
@@ -38,16 +36,30 @@
   padding: var(--spacing-x-small);
 }
 
+.form__error-field {
+  border: 2px solid var(--color-error);
+  border-radius: var(--border-radius-small);
+}
+
+.form__input-error {
+  display: none;
+  color: var(--color-error);
+}
+
+.form__input-error--show {
+  display: block;
+}
+
 .form__category {
   padding: var(--spacing-medium);
 }
 
 .form__error-message {
-  color: red;
+  display: none;
+  color: var(--color-error);
   text-align: center;
 }
 
-.form__error-field {
-  border: 2px solid red;
-  border-radius: var(--border-radius-small);
+.form__error-message--show {
+  display: block;
 }
