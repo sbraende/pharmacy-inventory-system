@@ -37,19 +37,144 @@
       </div>
     </header>
     <main class="site-main">
-      <section class="inventory">
-        <ul class="medicine-list"></ul>
+      <section class="sidebar">
+        <nav class="sidebar__nav">
+          <ol class="sidebar__list">
+            <li>
+              <button class="sidebar__list-button">
+                <img src="/assets/icons/dashboard.svg" alt="Dashboard icon" />
+                <span class="sidebar__list-text">Dashboard</span>
+              </button>
+            </li>
+            <li>
+              <button class="sidebar__list-button sidebar__list-button--active">
+                <img src="/assets/icons/inventory.svg" alt="Inventory icon" />
+                <span class="sidebar__list-text">Inventory</span>
+              </button>
+            </li>
+            <li>
+              <button class="sidebar__list-button">
+                <img src="/assets/icons/orders.svg" alt="Order icon" />
+                <span class="sidebar__list-text">Orders</span>
+              </button>
+            </li>
+            <li>
+              <button class="sidebar__list-button">
+                <img src="/assets/icons/support.svg" alt="Support icon" />
+                <span class="sidebar__list-text">Support</span>
+              </button>
+            </li>
+          </ol>
+        </nav>
+        <div class="settings-container">
+          <ol>
+            <li>
+              <button class="sidebar__list-button">
+                <img src="/assets/icons/log-out.svg" alt="Log out icon" />
+                <span class="sidebar__list-text">Log Out</span>
+              </button>
+            </li>
+            <li>
+              <button class="sidebar__list-button">
+                <img src="/assets/icons/settings.svg" alt="Settings icon" />
+                <span class="sidebar__list-text">Settings</span>
+              </button>
+            </li>
+          </ol>
+        </div>
       </section>
-      <section class="add-button-container">
-        <button class="add-button">Add Medicine ➕</button>
+
+      <section class="inventory">
+        <div class="inventory__container">
+          <header class="inventory__header-container">
+            <h2 class="inventory__header-title">Inventory</h2>
+            <button class="inventory__add-new-product-button">
+              <span>+</span>
+              <span class="inventory__add-new-product-text">Add New Product</span>
+            </button>
+          </header>
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>NAME</th>
+                <th>MANUFACTURER</th>
+                <th>EXPIRATION DATE</th>
+                <th>QUANTITY</th>
+                <th>MEDICINE-CATEGORY</th>
+                <th>DETAILS</th>
+                <th>EDIT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Paracetamol</td>
+                <td>XYZ Pharma</td>
+                <td>05.03.2025</td>
+                <td>200</td>
+                <td>Oral</td>
+                <td>Should be taken with food</td>
+                <td class="product-table__edit-container">
+                  <button class="product-table__edit-buttons">
+                    <img src="/assets/icons/edit.svg" alt="Edit icon" />
+                  </button>
+                  <button class="product-table__edit-buttons">
+                    <img src="/assets/icons/delete.svg" alt="Delete icon" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Paracetamol</td>
+                <td>XYZ Pharma</td>
+                <td>05.03.2025</td>
+                <td>200</td>
+                <td>Oral</td>
+                <td>Should be taken with food</td>
+                <td class="product-table__edit-container">
+                  <button class="product-table__edit-buttons">
+                    <img src="/assets/icons/edit.svg" alt="Edit icon" />
+                  </button>
+                  <button class="product-table__edit-buttons">
+                    <img src="/assets/icons/delete.svg" alt="Delete icon" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Paracetamol</td>
+                <td>XYZ Pharma</td>
+                <td>05.03.2025</td>
+                <td>200</td>
+                <td>Oral</td>
+                <td>Should be taken with food</td>
+                <td class="product-table__edit-container">
+                  <button class="product-table__edit-buttons">
+                    <img src="/assets/icons/edit.svg" alt="Edit icon" />
+                  </button>
+                  <button class="product-table__edit-buttons">
+                    <img src="/assets/icons/delete.svg" alt="Delete icon" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Paracetamol</td>
+                <td>XYZ Pharma</td>
+                <td>05.03.2025</td>
+                <td>200</td>
+                <td>Oral</td>
+                <td>Should be taken with food</td>
+                <td class="product-table__edit-container">
+                  <button class="product-table__edit-buttons">
+                    <img src="/assets/icons/edit.svg" alt="Edit icon" />
+                  </button>
+                  <button class="product-table__edit-buttons">
+                    <img src="/assets/icons/delete.svg" alt="Delete icon" />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
     </main>
-    <footer class="site-footer">
-      <p>
-        Made by Sebastian Braende. Checkout source code at
-        <a class="link" href="https://github.com/sbraende/">GitHub</a>
-      </p>
-    </footer>
     <!-- Add modal -->
     <div class="add-modal">
       <form class="form">
