@@ -1,5 +1,4 @@
 import MedicineManager from "./medicineManager";
-import Validate from "./validation";
 
 class UI {
   static addModal = document.querySelector(".add-modal");
@@ -101,11 +100,6 @@ class UI {
       const quantityInput = document.querySelector(".form__quantity-input");
       const medicineCategorySelect = document.querySelector(".form__medicine-category");
 
-      if (!Validate.validateForm()) {
-        return;
-      }
-
-      console.log("Form submitted!");
       MedicineManager.addMedicine(
         nameInput,
         manufacturerInput,
@@ -113,6 +107,7 @@ class UI {
         quantityInput,
         medicineCategorySelect
       );
+      console.log("Form submitted!");
     });
   }
 
