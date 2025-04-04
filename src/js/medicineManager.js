@@ -5,7 +5,7 @@ class MedicineManager {
   static medicineList = this.getMedicine();
 
   static getMedicine() {
-    return JSON.parse(localStorage.getItem("medicineList") || []);
+    return JSON.parse(localStorage.getItem("medicineList")) || [];
   }
 
   static addMedicine(

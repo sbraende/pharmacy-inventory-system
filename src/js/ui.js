@@ -4,70 +4,57 @@ class UI {
   static addModal = document.querySelector(".add-modal");
   static formElement = document.querySelector(".form");
 
+  static renderDate(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleString("en-GB", { dateStyle: "medium" });
+  }
+
   static renderMedicineList(medicineList) {
-    // Get list element
-    const medicineListElement = document.querySelector(".medicine-list");
-    medicineListElement.innerHTML = "";
+    const productTableBody = document.querySelector(".product-table__body");
+    productTableBody.innerHTML = "";
 
     medicineList.forEach((medicine) => {
-      const li = document.createElement("li");
-      li.classList.add("medicine");
+      const row = document.createElement("tr");
 
-      const detailsDiv = document.createElement("div");
-      detailsDiv.classList.add("medicine__details");
+      const createCell = (text) => {
+        const cell = document.createElement("td");
+        cell.textContent = text;
+        return cell;
+      };
 
-      const nameHeading = document.createElement("h3");
-      nameHeading.classList.add("medicine__name");
-      nameHeading.textContent = medicine.name;
-
-      // Function to create detail containers
-      function createDetail(labelText, valueText, valueClass) {
-        const container = document.createElement("div");
-        container.classList.add("medicine__detail-container");
-
-        const label = document.createElement("span");
-        label.classList.add("medicine__detail-label");
-        label.textContent = labelText;
-
-        const value = document.createElement("span");
-        value.classList.add(valueClass);
-        value.textContent = valueText;
-
-        container.append(label, value);
-        return container;
-      }
-
-      // Create all details
-      const manufacturer = createDetail(
-        "Manufacturer:",
-        medicine.manufacturer,
-        "medicine__manufacturer"
+      row.append(
+        createCell(medicine.name),
+        createCell(medicine.manufacturer),
+        createCell(this.renderDate(Date.parse(medicine.expirationDate))), // ISO to timestamp
+        createCell(medicine.quantity),
+        createCell(medicine.category),
+        createCell(medicine.remarks || "N/A") // TODO: Figure out details rendering
       );
-      const expirationDate = createDetail(
-        "Expiration date:",
-        medicine.expirationDate,
-        "medicine__expiration-date"
-      );
-      const quantity = createDetail("Quantity:", medicine.quantity, "medicine__quantity");
-      const category = createDetail("Medicine category:", medicine.category, "medicine__category");
-
-      detailsDiv.append(nameHeading, manufacturer, expirationDate, quantity, category);
 
       // Create edit/delete buttons container
-      const editDeleteDiv = document.createElement("div");
-      editDeleteDiv.classList.add("medicine__editDelete");
+      const editDeleteCell = document.createElement("td");
+      editDeleteCell.classList.add("product-table__edit-container");
 
       const editButton = document.createElement("button");
-      editButton.classList.add("medicine__edit");
-      editButton.textContent = "🖋️";
+      editButton.classList.add("product-table__edit-buttons");
+
+      const editIcon = document.createElement("img");
+      editIcon.src = "/assets/icons/edit.svg";
+      editIcon.alt = "Edit icon";
+      editButton.append(editIcon);
 
       const deleteButton = document.createElement("button");
-      deleteButton.classList.add("medicine__delete");
-      deleteButton.textContent = "🗑️";
+      deleteButton.classList.add("product-table__edit-buttons");
 
-      editDeleteDiv.append(editButton, deleteButton);
-      li.append(detailsDiv, editDeleteDiv);
-      medicineListElement.append(li);
+      const deleteIcon = document.createElement("img");
+      deleteIcon.src = "/assets/icons/delete.svg";
+      deleteIcon.alt = "Delete icon";
+      deleteButton.append(deleteIcon);
+
+      editDeleteCell.append(editButton, deleteButton);
+      row.append(editDeleteCell);
+
+      productTableBody.append(row);
     });
   }
 
@@ -80,7 +67,7 @@ class UI {
   }
 
   static initFormModal() {
-    const addMedicineButton = document.querySelector(".add-button");
+    const addMedicineButton = document.querySelector(".inventory__add-new-product-button");
     const formCancelButton = document.querySelector(".form__cancel-button");
 
     addMedicineButton.addEventListener("click", () => {
