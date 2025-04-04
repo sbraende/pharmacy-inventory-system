@@ -78,13 +78,13 @@
   border-radius: var(--border-radius-medium);
 }
 
-.form__accept-button {
+.form__submit-button {
   color: var(--color-primary-white);
   background-color: var(--color-primary-blue);
   transition: opacity 0.25s;
 }
 
-.form__accept-button:hover {
+.form__submit-button:hover {
   opacity: 0.8;
 }
 

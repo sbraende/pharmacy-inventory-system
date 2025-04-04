@@ -1,3 +1,4 @@
+import appState from "./appState";
 import { Medicine } from "./medicineClasses";
 import Validation from "./validation";
 
@@ -8,6 +9,10 @@ class MedicineManager {
     return JSON.parse(localStorage.getItem("medicineList")) || [];
   }
 
+  static storeMedicines() {
+    localStorage.setItem("medicineList", JSON.stringify(MedicineManager.medicineList));
+  }
+
   static addMedicine(
     nameInput,
     manufacturerInput,
@@ -15,11 +20,7 @@ class MedicineManager {
     quantityInput,
     categorySelect
   ) {
-    if (!Validation.validateForm()) {
-      return;
-    }
-
-    this.medicineList = this.getMedicine();
+    MedicineManager.medicineList = MedicineManager.getMedicine();
     const medicine = new Medicine(
       nameInput.value.trim(),
       manufacturerInput.value.trim(),
@@ -27,15 +28,40 @@ class MedicineManager {
       quantityInput.value,
       categorySelect.value
     );
-    this.medicineList.push(medicine);
-    localStorage.setItem("medicineList", JSON.stringify(this.medicineList));
+    MedicineManager.medicineList.push(medicine);
+    MedicineManager.storeMedicines();
+  }
+
+  static editMedicineData(
+    id,
+    nameInput,
+    manufacturerInput,
+    expirationDateInput,
+    quantityInput,
+    medicineCategorySelect
+  ) {
+    MedicineManager.medicineList = MedicineManager.getMedicine();
+    const medicineIndex = MedicineManager.medicineList.findIndex((medicine) => medicine.id === id);
+
+    if (medicineIndex !== -1) {
+      MedicineManager.medicineList[medicineIndex] = {
+        id,
+        name: nameInput.value.trim(),
+        manufacturer: manufacturerInput.value.trim(),
+        expirationDate: expirationDateInput.value,
+        quantity: quantityInput.value.trim(),
+        category: medicineCategorySelect.value.trim(),
+      };
+    }
+    MedicineManager.storeMedicines();
   }
 
   static removeMedicine(id) {
-    this.medicineList = this.getMedicine();
-    const filteredList = this.medicineList.filter((medicine) => id !== medicine.id);
-    localStorage.setItem("medicineList", JSON.stringify(filteredList));
-    this.medicineList = filteredList;
+    MedicineManager.medicineList = MedicineManager.getMedicine();
+    MedicineManager.medicineList = MedicineManager.medicineList.filter(
+      (medicine) => id !== medicine.id
+    );
+    MedicineManager.storeMedicines();
   }
 }
 
