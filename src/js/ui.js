@@ -55,6 +55,11 @@ class UI {
       row.append(editDeleteCell);
 
       productTableBody.append(row);
+
+      deleteButton.addEventListener("click", () => {
+        MedicineManager.removeMedicine(medicine.id);
+        this.renderProducts(MedicineManager.medicineList);
+      });
     });
   }
 

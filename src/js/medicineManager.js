@@ -2,7 +2,7 @@ import { Medicine } from "./medicineClasses";
 import Validation from "./validation";
 
 class MedicineManager {
-  static medicineList = this.getMedicine();
+  static medicineList = [];
 
   static getMedicine() {
     return JSON.parse(localStorage.getItem("medicineList")) || [];
@@ -29,7 +29,13 @@ class MedicineManager {
     );
     this.medicineList.push(medicine);
     localStorage.setItem("medicineList", JSON.stringify(this.medicineList));
-    // render interface
+  }
+
+  static removeMedicine(id) {
+    this.medicineList = this.getMedicine();
+    const filteredList = this.medicineList.filter((medicine) => id !== medicine.id);
+    localStorage.setItem("medicineList", JSON.stringify(filteredList));
+    this.medicineList = filteredList;
   }
 }
 
