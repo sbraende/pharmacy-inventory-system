@@ -1,5 +1,5 @@
 import { Medicine } from "./medicineClasses";
-import Validate from "./validation";
+import Validation from "./validation";
 
 class MedicineManager {
   static medicineList = this.getMedicine();
@@ -15,7 +15,7 @@ class MedicineManager {
     quantityInput,
     categorySelect
   ) {
-    if (!Validate.validateForm()) {
+    if (!Validation.validateForm()) {
       return;
     }
 

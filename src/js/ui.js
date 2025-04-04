@@ -9,7 +9,7 @@ class UI {
     return date.toLocaleString("en-GB", { dateStyle: "medium" });
   }
 
-  static renderMedicineList(medicineList) {
+  static renderProducts(medicineList) {
     const productTableBody = document.querySelector(".product-table__body");
     productTableBody.innerHTML = "";
 
@@ -94,12 +94,15 @@ class UI {
         quantityInput,
         medicineCategorySelect
       );
-      console.log("Form submitted!");
+
+      this.renderProducts(MedicineManager.getMedicine());
+      this.formElement.reset();
+      this.closeFormModal();
     });
   }
 
   static init() {
-    this.renderMedicineList(MedicineManager.getMedicine());
+    this.renderProducts(MedicineManager.getMedicine());
     this.initFormModal();
   }
 }

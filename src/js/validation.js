@@ -1,4 +1,4 @@
-class Validate {
+class Validation {
   static validateForm() {
     let isValid = true;
     const fieldsToValidate = [
@@ -48,4 +48,4 @@ class Validate {
   }
 }
 
-export default Validate;
+export default Validation;

@@ -25,6 +25,10 @@
   background-color: var(--color-light-gray);
 }
 
+.form__title {
+  font-weight: 400;
+}
+
 .form__group {
   display: flex;
   flex-direction: column;
@@ -37,13 +41,13 @@
 }
 
 .form__error-field {
-  border: 2px solid var(--color-error);
+  border: 2px solid var(--color-primary-red);
   border-radius: var(--border-radius-small);
 }
 
 .form__input-error {
   display: none;
-  color: var(--color-error);
+  color: var(--color-primary-red);
 }
 
 .form__input-error--show {
@@ -51,15 +55,44 @@
 }
 
 .form__category {
-  padding: var(--spacing-medium);
+  border: 0;
+}
+
+.form__category-title {
+  font-size: 1.1rem;
+  padding: var(--spacing-medium) 0 var(--spacing-small);
 }
 
 .form__error-message {
   display: none;
-  color: var(--color-error);
+  color: var(--color-primary-red);
   text-align: center;
 }
 
 .form__error-message--show {
   display: block;
+}
+
+.form__buttons {
+  padding: var(--spacing-small) var(--spacing-medium);
+  border-radius: var(--border-radius-medium);
+}
+
+.form__accept-button {
+  color: var(--color-primary-white);
+  background-color: var(--color-primary-blue);
+  transition: opacity 0.25s;
+}
+
+.form__accept-button:hover {
+  opacity: 0.8;
+}
+
+.form__cancel-button {
+  border: 1px solid var(--color-dark-gray);
+  transition: background-color 0.25s;
+}
+
+.form__cancel-button:hover {
+  background-color: var(--color-medium-gray);
 }

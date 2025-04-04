@@ -36,6 +36,7 @@
         </button>
       </div>
     </header>
+
     <main class="site-main">
       <section class="sidebar">
         <nav class="sidebar__nav">
@@ -110,6 +111,7 @@
         </div>
       </section>
     </main>
+
     <!-- Add modal -->
     <div class="add-modal">
       <form class="form">
@@ -175,7 +177,7 @@
         <!-- Oral medication  -->
         <div class="form__oral-medicaiton">
           <fieldset class="form__category">
-            <legend>Oral medication details</legend>
+            <legend class="form__category-title">Oral medication details</legend>
             <div class="form__group">
               <label for="absorption-rate">Absorption rate</label>
               <input
@@ -205,7 +207,7 @@
         <!-- Injectable medication  -->
         <div class="form__injectable-medication">
           <fieldset class="form__category">
-            <legend>Injectable medication details</legend>
+            <legend class="form__category-title">Injectable medication details</legend>
             <div class="form__group">
               <label for="injection-site">Injection site</label>
               <input
@@ -235,7 +237,7 @@
         <!-- Topical medication  -->
         <div class="form__topical-medicaiton">
           <fieldset class="form__category">
-            <legend>Topical medication details</legend>
+            <legend class="form__category-title">Topical medication details</legend>
             <div class="form__group">
               <label for="absorption-level">Absortption level</label>
               <input
@@ -263,8 +265,8 @@
           </fieldset>
         </div>
         <p class="form__error-message">Form error message</p>
-        <button class="form__accept-button" type="submit">Accept</button>
-        <button class="form__cancel-button" type="button">Cancel</button>
+        <button class="form__accept-button form__buttons" type="submit">Accept</button>
+        <button class="form__cancel-button form__buttons" type="button">Cancel</button>
       </form>
     </div>
     <div class="delete-modal">
