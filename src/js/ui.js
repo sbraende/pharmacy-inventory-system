@@ -193,13 +193,47 @@ class UI {
         return cell;
       };
 
+      const createDetailsCell = () => {
+        const cell = document.createElement("td");
+        const paragraph1 = document.createElement("p");
+        const paragraph2 = document.createElement("p");
+        cell.append(paragraph1, paragraph2);
+
+        let text;
+        switch (medicine.category) {
+          case "oral":
+            paragraph1.textContent = medicine.absorptionRate
+              ? `Absorption Rate: ${medicine.absorptionRate}`
+              : "";
+
+            paragraph2.textContent = medicine.foodInteraction
+              ? `Food Interaction: ${medicine.foodInteraction}`
+              : "";
+            break;
+          case "injectable":
+            paragraph1.textContent = medicine.injectionSite
+              ? `Injection Site: ${medicine.injectionSite}`
+              : "";
+            paragraph2.textContent = medicine.onsetTime ? `Onset Time: ${medicine.onsetTime}` : "";
+          case "topical":
+            paragraph1.textContent = medicine.absorptionLevel
+              ? `Absorption Level: ${medicine.absorptionLevel}`
+              : "";
+            paragraph2.textContent = medicine.residueType
+              ? `Residue Type: ${medicine.residueType}`
+              : "";
+            break;
+        }
+        return cell;
+      };
+
       row.append(
         createCell(medicine.name),
         createCell(medicine.manufacturer),
         createCell(Utility.renderDate(Date.parse(medicine.expirationDate))), // ISO to timestamp
         createCell(medicine.quantity),
         createCell(medicine.category),
-        createCell(medicine.remarks || "N/A") // TODO: Figure out details rendering
+        createDetailsCell()
       );
 
       // Create edit/delete buttons container
