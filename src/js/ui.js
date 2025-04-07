@@ -11,13 +11,19 @@ class UI {
 
   // Modal control
   static openFormModal() {
+    const medicineCategorySelect = document.querySelector(".form__medicine-category");
     UI.addModal.classList.add("show-flex");
+
+    medicineCategorySelect.addEventListener("change", (e) => {
+      UI.renderFormCategories(e.target.value);
+    });
   }
 
   static closeFormModal() {
     UI.addModal.classList.remove("show-flex");
     UI.formSubmitButton.textContent = "Submit";
     UI.formElement.reset();
+    UI.resetFormCategories();
     appState.editState = null;
   }
 
@@ -32,7 +38,32 @@ class UI {
     UI.deleteModal.classList.remove("show-flex");
   }
 
+  static resetFormCategories() {
+    const formCategory = document.querySelectorAll(".form__category");
+    formCategory.forEach((element) => {
+      element.classList.remove("form__category--show");
+    });
+  }
+
   // Event handlers helpers
+  static renderFormCategories(category) {
+    UI.resetFormCategories();
+
+    switch (category) {
+      case "oral":
+        document.querySelector(".form__oral-medicaiton").classList.add("form__category--show");
+        break;
+      case "injectable":
+        document
+          .querySelector(".form__injectable-medication")
+          .classList.add("form__category--show");
+        break;
+      case "topical":
+        document.querySelector(".form__topical-medicaiton").classList.add("form__category--show");
+        break;
+    }
+  }
+
   static performDelete(id) {
     MedicineManager.removeMedicine(id);
     UI.renderProducts(MedicineManager.medicineList);
@@ -100,6 +131,7 @@ class UI {
         );
       }
       UI.closeFormModal();
+      UI.resetFormCategories();
       UI.renderProducts(MedicineManager.getMedicine());
     });
   }
@@ -129,6 +161,8 @@ class UI {
     expirationDateInput.value = Utility.ISODateToNormalizedDate(currentMedicine.expirationDate);
     quantityInput.value = currentMedicine.quantity;
     medicineCategorySelect.value = currentMedicine.category;
+
+    UI.renderFormCategories(medicineCategorySelect.value);
   }
 
   static editMedicine(id) {
