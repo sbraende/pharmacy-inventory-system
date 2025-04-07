@@ -57,25 +57,27 @@ class MedicineManager {
     MedicineManager.storeMedicines();
   }
 
-  static editMedicineData(
-    id,
-    nameInput,
-    manufacturerInput,
-    expirationDateInput,
-    quantityInput,
-    medicineCategorySelect
-  ) {
+  static editMedicineData(id, medicineInputs) {
     MedicineManager.medicineList = MedicineManager.getMedicine();
     const medicineIndex = MedicineManager.medicineList.findIndex((medicine) => medicine.id === id);
 
     if (medicineIndex !== -1) {
       MedicineManager.medicineList[medicineIndex] = {
         id,
-        name: nameInput.value.trim(),
-        manufacturer: manufacturerInput.value.trim(),
-        expirationDate: expirationDateInput.value,
-        quantity: quantityInput.value.trim(),
-        category: medicineCategorySelect.value.trim(),
+        name: medicineInputs.nameInput.value.trim(),
+        manufacturer: medicineInputs.manufacturerInput.value.trim(),
+        expirationDate: medicineInputs.expirationDateInput.value,
+        quantity: medicineInputs.quantityInput.value.trim(),
+        category: medicineInputs.medicineCategorySelect.value.trim(),
+
+        absorptionRate: medicineInputs.absorptionRateInput.value.trim(),
+        foodInteraction: medicineInputs.foodInteractionInput.value.trim(),
+
+        injectionSite: medicineInputs.injectionSiteInput.value.trim(),
+        onsetTime: medicineInputs.onsetTimeInput.value.trim(),
+
+        absorptionLevel: medicineInputs.absorptionLevelInput.value.trim(),
+        residueType: medicineInputs.residueTypeInput.value.trim(),
       };
     }
     MedicineManager.storeMedicines();
