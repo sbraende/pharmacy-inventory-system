@@ -100,11 +100,22 @@ class UI {
 
     UI.formElement.addEventListener("submit", (e) => {
       e.preventDefault();
-      const nameInput = document.querySelector(".form__name-input");
-      const manufacturerInput = document.querySelector(".form__manufacturer-input");
-      const expirationDateInput = document.querySelector(".form__expiration-date-input");
-      const quantityInput = document.querySelector(".form__quantity-input");
-      const medicineCategorySelect = document.querySelector(".form__medicine-category");
+      const medicineInputs = {
+        nameInput: document.querySelector(".form__name-input"),
+        manufacturerInput: document.querySelector(".form__manufacturer-input"),
+        expirationDateInput: document.querySelector(".form__expiration-date-input"),
+        quantityInput: document.querySelector(".form__quantity-input"),
+        medicineCategorySelect: document.querySelector(".form__medicine-category"),
+
+        absorptionRateInput: document.querySelector(".form__absorption-rate-input"),
+        foodInteractionInput: document.querySelector(".form__food-interaction-input"),
+
+        injectionSiteInput: document.querySelector(".form__injection-site-input"),
+        onsetTimeInput: document.querySelector(".form__onset-time-input"),
+
+        absorptionLevelInput: document.querySelector(".form__absorption-level-input"),
+        residueTypeInput: document.querySelector(".form__residue-type-input"),
+      };
 
       if (!Validation.validateForm()) {
         return;
@@ -112,23 +123,10 @@ class UI {
 
       if (!appState.editState) {
         // Add mode
-        MedicineManager.addMedicine(
-          nameInput,
-          manufacturerInput,
-          expirationDateInput,
-          quantityInput,
-          medicineCategorySelect
-        );
+        MedicineManager.addMedicine(medicineInputs);
       } else {
         // Edit mode
-        MedicineManager.editMedicineData(
-          appState.editState,
-          nameInput,
-          manufacturerInput,
-          expirationDateInput,
-          quantityInput,
-          medicineCategorySelect
-        );
+        MedicineManager.editMedicineData(appState.editState, medicineInputs);
       }
       UI.closeFormModal();
       UI.resetFormCategories();

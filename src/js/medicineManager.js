@@ -1,5 +1,5 @@
 import appState from "./appState";
-import { Medicine } from "./medicineClasses";
+import { Medicine, OralMedicine, InjectableMedicine, TopicalMedicine } from "./medicineClasses";
 import Validation from "./validation";
 
 class MedicineManager {
@@ -13,21 +13,46 @@ class MedicineManager {
     localStorage.setItem("medicineList", JSON.stringify(MedicineManager.medicineList));
   }
 
-  static addMedicine(
-    nameInput,
-    manufacturerInput,
-    expirationDateInput,
-    quantityInput,
-    categorySelect
-  ) {
+  static addMedicine(medicineInputs) {
     MedicineManager.medicineList = MedicineManager.getMedicine();
-    const medicine = new Medicine(
-      nameInput.value.trim(),
-      manufacturerInput.value.trim(),
-      new Date(expirationDateInput.value).toISOString(),
-      quantityInput.value,
-      categorySelect.value
-    );
+
+    let medicine;
+    switch (medicineInputs.medicineCategorySelect.value) {
+      case "oral":
+        medicine = new OralMedicine(
+          medicineInputs.nameInput.value.trim(),
+          medicineInputs.manufacturerInput.value.trim(),
+          new Date(medicineInputs.expirationDateInput.value).toISOString(),
+          medicineInputs.quantityInput.value,
+          medicineInputs.medicineCategorySelect.value,
+          medicineInputs.absorptionRateInput.value,
+          medicineInputs.foodInteractionInput.value
+        );
+        break;
+      case "injectable":
+        medicine = new InjectableMedicine(
+          medicineInputs.nameInput.value.trim(),
+          medicineInputs.manufacturerInput.value.trim(),
+          new Date(medicineInputs.expirationDateInput.value).toISOString(),
+          medicineInputs.quantityInput.value,
+          medicineInputs.medicineCategorySelect.value,
+          medicineInputs.injectionSiteInput.value,
+          medicineInputs.onsetTimeInput.value
+        );
+        break;
+      case "topical":
+        medicine = new TopicalMedicine(
+          medicineInputs.nameInput.value.trim(),
+          medicineInputs.manufacturerInput.value.trim(),
+          new Date(medicineInputs.expirationDateInput.value).toISOString(),
+          medicineInputs.quantityInput.value,
+          medicineInputs.medicineCategorySelect.value,
+          medicineInputs.absorptionLevelInput.value,
+          medicineInputs.residueTypeInput.value
+        );
+        break;
+    }
+
     MedicineManager.medicineList.push(medicine);
     MedicineManager.storeMedicines();
   }

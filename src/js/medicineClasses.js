@@ -12,11 +12,43 @@ class Medicine {
 }
 
 class OralMedicine extends Medicine {
-  constructor(obsorptionRate, foodInteraction) {
-    super();
-    this.obsorptionRate = obsorptionRate;
+  constructor(
+    name,
+    manufacturer,
+    expirationDate,
+    quantity,
+    category,
+    absorptionRate,
+    foodInteraction
+  ) {
+    super(name, manufacturer, expirationDate, quantity, category);
+    this.absorptionRate = absorptionRate;
     this.foodInteraction = foodInteraction;
   }
 }
 
-export { Medicine, OralMedicine };
+class InjectableMedicine extends Medicine {
+  constructor(name, manufacturer, expirationDate, quantity, category, injectionSite, onsetTime) {
+    super(name, manufacturer, expirationDate, quantity, category);
+    this.injectionSite = injectionSite;
+    this.onsetTime = onsetTime;
+  }
+}
+
+class TopicalMedicine extends Medicine {
+  constructor(
+    name,
+    manufacturer,
+    expirationDate,
+    quantity,
+    category,
+    absorptionLevel,
+    residueType
+  ) {
+    super(name, manufacturer, expirationDate, quantity, category);
+    this.absorptionLevel = absorptionLevel;
+    this.residueType = residueType;
+  }
+}
+
+export { Medicine, OralMedicine, InjectableMedicine, TopicalMedicine };
