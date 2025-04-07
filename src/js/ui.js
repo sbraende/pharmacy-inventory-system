@@ -1,11 +1,12 @@
-import appState from "./appState";
 import MedicineManager from "./medicineManager";
+import appState from "./appState";
 import Validation from "./validation";
 
 class UI {
   static addModal = document.querySelector(".add-modal");
   static formElement = document.querySelector(".form");
   static formSubmitButton = document.querySelector(".form__submit-button");
+  static deleteModal = document.querySelector(".delete-modal");
 
   static renderDate(timestamp) {
     const date = new Date(timestamp);
@@ -27,6 +28,38 @@ class UI {
     UI.formElement.reset();
   }
 
+  static openDeleteModal(medicineName) {
+    const deleteModalText = document.querySelector(".delete-modal__text");
+
+    UI.deleteModal.classList.add("show-flex");
+    deleteModalText.textContent = `Are you sure you want to delete '${medicineName}'`;
+  }
+
+  static deleteEvent(id) {
+    MedicineManager.removeMedicine(id);
+    UI.renderProducts(MedicineManager.medicineList);
+  }
+
+  static closeDeleteModal() {
+    UI.deleteModal.classList.remove("show-flex");
+  }
+
+  static handleConfirmDeleteButton(id) {
+    const deleteModalConfirmDeleteButton = document.querySelector(".delete-modal__confirm");
+
+    if (appState.deleteState) {
+      deleteModalConfirmDeleteButton.removeEventListener("click", appState.deleteState);
+    }
+
+    appState.deleteState = () => {
+      UI.deleteEvent(id);
+      UI.closeDeleteModal();
+      appState.deleteState = null;
+    };
+
+    deleteModalConfirmDeleteButton.addEventListener("click", appState.deleteState);
+  }
+
   static initFormModal() {
     const addMedicineButton = document.querySelector(".inventory__add-new-product-button");
     const formCancelButton = document.querySelector(".form__cancel-button");
@@ -41,7 +74,6 @@ class UI {
 
     UI.formElement.addEventListener("submit", (e) => {
       e.preventDefault();
-      // Get selection
       const nameInput = document.querySelector(".form__name-input");
       const manufacturerInput = document.querySelector(".form__manufacturer-input");
       const expirationDateInput = document.querySelector(".form__expiration-date-input");
@@ -77,6 +109,32 @@ class UI {
     });
   }
 
+  static initDeleteModal() {
+    const deleteModalCancel = document.querySelector(".delete-modal__cancel");
+
+    deleteModalCancel.addEventListener("click", () => {
+      UI.deleteModal.classList.remove("show-flex");
+    });
+  }
+
+  static populateInputFields(
+    id,
+    nameInput,
+    manufacturerInput,
+    expirationDateInput,
+    quantityInput,
+    medicineCategorySelect
+  ) {
+    const medicineList = MedicineManager.getMedicine();
+    const currentMedicine = medicineList.find((medicine) => medicine.id === id);
+
+    nameInput.value = currentMedicine.name;
+    manufacturerInput.value = currentMedicine.manufacturer;
+    expirationDateInput.value = UI.ISODateToNormalizedDate(currentMedicine.expirationDate);
+    quantityInput.value = currentMedicine.quantity;
+    medicineCategorySelect.value = currentMedicine.category;
+  }
+
   static editMedicine(id) {
     const nameInput = document.querySelector(".form__name-input");
     const manufacturerInput = document.querySelector(".form__manufacturer-input");
@@ -96,24 +154,6 @@ class UI {
       medicineCategorySelect
     );
     appState.editState = id;
-  }
-
-  static populateInputFields(
-    id,
-    nameInput,
-    manufacturerInput,
-    expirationDateInput,
-    quantityInput,
-    medicineCategorySelect
-  ) {
-    const medicineList = MedicineManager.getMedicine();
-    const currentMedicine = medicineList.find((medicine) => medicine.id === id);
-
-    nameInput.value = currentMedicine.name;
-    manufacturerInput.value = currentMedicine.manufacturer;
-    expirationDateInput.value = UI.ISODateToNormalizedDate(currentMedicine.expirationDate);
-    quantityInput.value = currentMedicine.quantity;
-    medicineCategorySelect.value = currentMedicine.category;
   }
 
   static renderProducts(medicineList) {
@@ -168,8 +208,8 @@ class UI {
       });
 
       deleteButton.addEventListener("click", () => {
-        MedicineManager.removeMedicine(medicine.id);
-        UI.renderProducts(MedicineManager.medicineList);
+        UI.openDeleteModal(medicine.name);
+        UI.handleConfirmDeleteButton(medicine.id);
       });
     });
   }
@@ -177,6 +217,7 @@ class UI {
   static init() {
     UI.renderProducts(MedicineManager.getMedicine());
     UI.initFormModal();
+    UI.initDeleteModal();
   }
 }
 
