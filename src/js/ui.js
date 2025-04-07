@@ -1,6 +1,7 @@
 import MedicineManager from "./medicineManager";
 import appState from "./appState";
 import Validation from "./validation";
+import Utility from "./utility";
 
 class UI {
   static addModal = document.querySelector(".add-modal");
@@ -8,16 +9,7 @@ class UI {
   static formSubmitButton = document.querySelector(".form__submit-button");
   static deleteModal = document.querySelector(".delete-modal");
 
-  static renderDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleString("en-GB", { dateStyle: "medium" });
-  }
-
-  static ISODateToNormalizedDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.toISOString().split("T")[0];
-  }
-
+  // Modal control
   static openFormModal() {
     UI.addModal.classList.add("show-flex");
   }
@@ -26,6 +18,7 @@ class UI {
     UI.addModal.classList.remove("show-flex");
     UI.formSubmitButton.textContent = "Submit";
     UI.formElement.reset();
+    appState.editState = null;
   }
 
   static openDeleteModal(medicineName) {
@@ -35,13 +28,14 @@ class UI {
     deleteModalText.textContent = `Are you sure you want to delete '${medicineName}'`;
   }
 
-  static deleteEvent(id) {
-    MedicineManager.removeMedicine(id);
-    UI.renderProducts(MedicineManager.medicineList);
-  }
-
   static closeDeleteModal() {
     UI.deleteModal.classList.remove("show-flex");
+  }
+
+  // Event handlers helpers
+  static performDelete(id) {
+    MedicineManager.removeMedicine(id);
+    UI.renderProducts(MedicineManager.medicineList);
   }
 
   static handleConfirmDeleteButton(id) {
@@ -52,7 +46,7 @@ class UI {
     }
 
     appState.deleteState = () => {
-      UI.deleteEvent(id);
+      UI.performDelete(id);
       UI.closeDeleteModal();
       appState.deleteState = null;
     };
@@ -60,6 +54,7 @@ class UI {
     deleteModalConfirmDeleteButton.addEventListener("click", appState.deleteState);
   }
 
+  // Form/modal setup
   static initFormModal() {
     const addMedicineButton = document.querySelector(".inventory__add-new-product-button");
     const formCancelButton = document.querySelector(".form__cancel-button");
@@ -117,6 +112,7 @@ class UI {
     });
   }
 
+  // Form helpers
   static populateInputFields(
     id,
     nameInput,
@@ -130,7 +126,7 @@ class UI {
 
     nameInput.value = currentMedicine.name;
     manufacturerInput.value = currentMedicine.manufacturer;
-    expirationDateInput.value = UI.ISODateToNormalizedDate(currentMedicine.expirationDate);
+    expirationDateInput.value = Utility.ISODateToNormalizedDate(currentMedicine.expirationDate);
     quantityInput.value = currentMedicine.quantity;
     medicineCategorySelect.value = currentMedicine.category;
   }
@@ -156,6 +152,7 @@ class UI {
     appState.editState = id;
   }
 
+  // Render logic
   static renderProducts(medicineList) {
     const productTableBody = document.querySelector(".product-table__body");
     productTableBody.innerHTML = "";
@@ -172,7 +169,7 @@ class UI {
       row.append(
         createCell(medicine.name),
         createCell(medicine.manufacturer),
-        createCell(UI.renderDate(Date.parse(medicine.expirationDate))), // ISO to timestamp
+        createCell(Utility.renderDate(Date.parse(medicine.expirationDate))), // ISO to timestamp
         createCell(medicine.quantity),
         createCell(medicine.category),
         createCell(medicine.remarks || "N/A") // TODO: Figure out details rendering
@@ -214,6 +211,7 @@ class UI {
     });
   }
 
+  // App bootstrap
   static init() {
     UI.renderProducts(MedicineManager.getMedicine());
     UI.initFormModal();
