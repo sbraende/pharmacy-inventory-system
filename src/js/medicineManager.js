@@ -59,27 +59,52 @@ class MedicineManager {
 
   static editMedicineData(id, medicineInputs) {
     MedicineManager.medicineList = MedicineManager.getMedicine();
+
     const medicineIndex = MedicineManager.medicineList.findIndex((medicine) => medicine.id === id);
+    if (medicineIndex === -1) return;
 
-    if (medicineIndex !== -1) {
-      MedicineManager.medicineList[medicineIndex] = {
-        id,
-        name: medicineInputs.nameInput.value.trim(),
-        manufacturer: medicineInputs.manufacturerInput.value.trim(),
-        expirationDate: medicineInputs.expirationDateInput.value,
-        quantity: medicineInputs.quantityInput.value.trim(),
-        category: medicineInputs.medicineCategorySelect.value.trim(),
+    let updatedMedicine;
 
-        absorptionRate: medicineInputs.absorptionRateInput.value.trim(),
-        foodInteraction: medicineInputs.foodInteractionInput.value.trim(),
+    switch (medicineInputs.medicineCategorySelect.value.trim()) {
+      case "oral":
+        updatedMedicine = new OralMedicine(
+          medicineInputs.nameInput.value.trim(),
+          medicineInputs.manufacturerInput.value.trim(),
+          new Date(medicineInputs.expirationDateInput.value).toISOString(),
+          medicineInputs.quantityInput.value.trim(),
+          "oral",
+          medicineInputs.absorptionRateInput.value.trim(),
+          medicineInputs.foodInteractionInput.value.trim()
+        );
+        break;
 
-        injectionSite: medicineInputs.injectionSiteInput.value.trim(),
-        onsetTime: medicineInputs.onsetTimeInput.value.trim(),
+      case "injectable":
+        updatedMedicine = new InjectableMedicine(
+          medicineInputs.nameInput.value.trim(),
+          medicineInputs.manufacturerInput.value.trim(),
+          new Date(medicineInputs.expirationDateInput.value).toISOString(),
+          medicineInputs.quantityInput.value.trim(),
+          "injectable",
+          medicineInputs.injectionSiteInput.value.trim(),
+          medicineInputs.onsetTimeInput.value.trim()
+        );
+        break;
 
-        absorptionLevel: medicineInputs.absorptionLevelInput.value.trim(),
-        residueType: medicineInputs.residueTypeInput.value.trim(),
-      };
+      case "topical":
+        updatedMedicine = new TopicalMedicine(
+          medicineInputs.nameInput.value.trim(),
+          medicineInputs.manufacturerInput.value.trim(),
+          new Date(medicineInputs.expirationDateInput.value).toISOString(),
+          medicineInputs.quantityInput.value.trim(),
+          "topical",
+          medicineInputs.absorptionLevelInput.value.trim(),
+          medicineInputs.residueTypeInput.value.trim()
+        );
+        break;
     }
+
+    updatedMedicine.id = id; // Keep current id
+    MedicineManager.medicineList[medicineIndex] = updatedMedicine;
     MedicineManager.storeMedicines();
   }
 

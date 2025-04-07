@@ -85,6 +85,25 @@ class UI {
     deleteModalConfirmDeleteButton.addEventListener("click", appState.deleteState);
   }
 
+  static getMedicineInputs() {
+    return {
+      nameInput: document.querySelector(".form__name-input"),
+      manufacturerInput: document.querySelector(".form__manufacturer-input"),
+      expirationDateInput: document.querySelector(".form__expiration-date-input"),
+      quantityInput: document.querySelector(".form__quantity-input"),
+      medicineCategorySelect: document.querySelector(".form__medicine-category"),
+
+      absorptionRateInput: document.querySelector(".form__absorption-rate-input"),
+      foodInteractionInput: document.querySelector(".form__food-interaction-input"),
+
+      injectionSiteInput: document.querySelector(".form__injection-site-input"),
+      onsetTimeInput: document.querySelector(".form__onset-time-input"),
+
+      absorptionLevelInput: document.querySelector(".form__absorption-level-input"),
+      residueTypeInput: document.querySelector(".form__residue-type-input"),
+    };
+  }
+
   // Form/modal setup
   static initFormModal() {
     const addMedicineButton = document.querySelector(".inventory__add-new-product-button");
@@ -100,22 +119,7 @@ class UI {
 
     UI.formElement.addEventListener("submit", (e) => {
       e.preventDefault();
-      const medicineInputs = {
-        nameInput: document.querySelector(".form__name-input"),
-        manufacturerInput: document.querySelector(".form__manufacturer-input"),
-        expirationDateInput: document.querySelector(".form__expiration-date-input"),
-        quantityInput: document.querySelector(".form__quantity-input"),
-        medicineCategorySelect: document.querySelector(".form__medicine-category"),
-
-        absorptionRateInput: document.querySelector(".form__absorption-rate-input"),
-        foodInteractionInput: document.querySelector(".form__food-interaction-input"),
-
-        injectionSiteInput: document.querySelector(".form__injection-site-input"),
-        onsetTimeInput: document.querySelector(".form__onset-time-input"),
-
-        absorptionLevelInput: document.querySelector(".form__absorption-level-input"),
-        residueTypeInput: document.querySelector(".form__residue-type-input"),
-      };
+      const medicineInputs = UI.getMedicineInputs();
 
       if (!Validation.validateForm()) {
         return;
@@ -143,44 +147,35 @@ class UI {
   }
 
   // Form helpers
-  static populateInputFields(
-    id,
-    nameInput,
-    manufacturerInput,
-    expirationDateInput,
-    quantityInput,
-    medicineCategorySelect
-  ) {
+  static populateInputFields(id, medicineInputs) {
     const medicineList = MedicineManager.getMedicine();
     const currentMedicine = medicineList.find((medicine) => medicine.id === id);
 
-    nameInput.value = currentMedicine.name;
-    manufacturerInput.value = currentMedicine.manufacturer;
-    expirationDateInput.value = Utility.ISODateToNormalizedDate(currentMedicine.expirationDate);
-    quantityInput.value = currentMedicine.quantity;
-    medicineCategorySelect.value = currentMedicine.category;
+    medicineInputs.nameInput.value = currentMedicine.name;
+    medicineInputs.manufacturerInput.value = currentMedicine.manufacturer;
+    medicineInputs.expirationDateInput.value = Utility.ISODateToNormalizedDate(
+      currentMedicine.expirationDate
+    );
+    medicineInputs.quantityInput.value = currentMedicine.quantity;
+    medicineInputs.medicineCategorySelect.value = currentMedicine.category;
 
-    UI.renderFormCategories(medicineCategorySelect.value);
+    medicineInputs.absorptionRateInput.value = currentMedicine.absorptionRate || "";
+    medicineInputs.foodInteractionInput.value = currentMedicine.foodInteraction || "";
+    medicineInputs.injectionSiteInput.value = currentMedicine.injectionSite || "";
+    medicineInputs.onsetTimeInput.value = currentMedicine.onsetTime || "";
+    medicineInputs.absorptionLevelInput.value = currentMedicine.absorptionLevel || "";
+    medicineInputs.residueTypeInput.value = currentMedicine.residueType || "";
+
+    UI.renderFormCategories(medicineInputs.medicineCategorySelect.value);
   }
 
   static editMedicine(id) {
-    const nameInput = document.querySelector(".form__name-input");
-    const manufacturerInput = document.querySelector(".form__manufacturer-input");
-    const expirationDateInput = document.querySelector(".form__expiration-date-input");
-    const quantityInput = document.querySelector(".form__quantity-input");
-    const medicineCategorySelect = document.querySelector(".form__medicine-category");
+    const medicineInputs = UI.getMedicineInputs();
 
     UI.openFormModal();
     UI.formSubmitButton.textContent = "Confirm Edit";
 
-    UI.populateInputFields(
-      id,
-      nameInput,
-      manufacturerInput,
-      expirationDateInput,
-      quantityInput,
-      medicineCategorySelect
-    );
+    UI.populateInputFields(id, medicineInputs);
     appState.editState = id;
   }
 
