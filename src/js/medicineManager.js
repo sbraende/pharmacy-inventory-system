@@ -1,16 +1,26 @@
-import appState from "./appState";
-import { Medicine, OralMedicine, InjectableMedicine, TopicalMedicine } from "./medicineClasses";
-import Validation from "./validation";
+import { OralMedicine, InjectableMedicine, TopicalMedicine } from "./medicineClasses";
+import UI from "./ui";
 
 class MedicineManager {
   static medicineList = [];
 
   static getMedicine() {
-    return JSON.parse(localStorage.getItem("medicineList")) || [];
+    try {
+      MedicineManager.medicineList = JSON.parse(localStorage.getItem("medicineList")) || [];
+      return MedicineManager.medicineList;
+    } catch (error) {
+      UI.openErrorModal("Could not get medicine from local storage");
+      console.error("Could not get medicine from local storage", error);
+    }
   }
 
   static storeMedicines() {
-    localStorage.setItem("medicineList", JSON.stringify(MedicineManager.medicineList));
+    try {
+      localStorage.setItem("medicineList", JSON.stringify(MedicineManager.medicineList));
+    } catch (error) {
+      UI.openErrorModal("Could not store medicine in local storage");
+      console.error("Could not store medicine in local storage", error);
+    }
   }
 
   static addMedicine(medicineInputs) {

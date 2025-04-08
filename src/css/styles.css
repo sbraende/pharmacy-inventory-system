@@ -1,10 +1,11 @@
-@import url(./base/reset.css);
-@import url(./base/variables.css);
-@import url(./base/fonts.css);
+@import url("./base/reset.css");
+@import url("./base/variables.css");
+@import url("./base/fonts.css");
 
-@import url(./components/addModal.css);
-@import url(./components/deleteModal.css);
+@import url("./components/addModal.css");
+@import url("./components/deleteModal.css");
+@import url("./components/errorModal.css");
 
-@import url(./pages/index.css);
+@import url("./pages/index.css");
 
-@import url(./base/utilities.css);
+@import url("./base/utilities.css");

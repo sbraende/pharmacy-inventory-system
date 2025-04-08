@@ -8,6 +8,8 @@ class UI {
   static formElement = document.querySelector(".form");
   static formSubmitButton = document.querySelector(".form__submit-button");
   static deleteModal = document.querySelector(".delete-modal");
+  static errorModal = document.querySelector(".error-modal");
+  static errorModalMessage = document.querySelector(".error-modal__message");
 
   // Modal control
   static openFormModal() {
@@ -43,6 +45,16 @@ class UI {
     formCategory.forEach((element) => {
       element.classList.remove("form__category--show");
     });
+  }
+
+  static openErrorModal(message) {
+    UI.errorModalMessage.textContent = message;
+    UI.errorModal.classList.add("error-modal--active");
+  }
+
+  static closeErrorModal() {
+    UI.errorModalMessage.textContent = "";
+    UI.errorModal.classList.remove("error-modal--active");
   }
 
   // Event handlers helpers
@@ -199,7 +211,6 @@ class UI {
         const paragraph2 = document.createElement("p");
         cell.append(paragraph1, paragraph2);
 
-        let text;
         switch (medicine.category) {
           case "oral":
             paragraph1.textContent = medicine.absorptionRate
@@ -211,10 +222,13 @@ class UI {
               : "";
             break;
           case "injectable":
+            console.log(medicine.onsetTime);
+
             paragraph1.textContent = medicine.injectionSite
               ? `Injection Site: ${medicine.injectionSite}`
               : "";
             paragraph2.textContent = medicine.onsetTime ? `Onset Time: ${medicine.onsetTime}` : "";
+            break;
           case "topical":
             paragraph1.textContent = medicine.absorptionLevel
               ? `Absorption Level: ${medicine.absorptionLevel}`
@@ -230,7 +244,7 @@ class UI {
       row.append(
         createCell(medicine.name),
         createCell(medicine.manufacturer),
-        createCell(Utility.renderDate(Date.parse(medicine.expirationDate))), // ISO to timestamp
+        createCell(Utility.TimestampToDisplayDate(Date.parse(medicine.expirationDate))), // ISODate to Dateobject to Render Date
         createCell(medicine.quantity),
         createCell(medicine.category),
         createDetailsCell()

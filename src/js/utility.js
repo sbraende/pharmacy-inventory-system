@@ -1,5 +1,5 @@
 class Utility {
-  static renderDate(timestamp) {
+  static TimestampToDisplayDate(timestamp) {
     const date = new Date(timestamp);
     return date.toLocaleString("en-GB", { dateStyle: "medium" });
   }
