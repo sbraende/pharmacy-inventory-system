@@ -1,5 +1,5 @@
 import MedicineManager from "./medicineManager.js";
-import appState from "./appState.js";
+import appState from "./appstate.js";
 import Validation from "./validation.js";
 import Utility from "./utility.js";
 
