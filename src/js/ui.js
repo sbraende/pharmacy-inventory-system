@@ -1,7 +1,7 @@
-import MedicineManager from "./medicineManager";
-import appState from "./appState";
-import Validation from "./validation";
-import Utility from "./utility";
+import MedicineManager from "./medicineManager.js";
+import appState from "./appState.js";
+import Validation from "./validation.js";
+import Utility from "./utility.js";
 
 class UI {
   static addModal = document.querySelector(".add-modal");

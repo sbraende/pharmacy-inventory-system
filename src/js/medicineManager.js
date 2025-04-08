@@ -1,5 +1,5 @@
-import { OralMedicine, InjectableMedicine, TopicalMedicine } from "./medicineClasses";
-import UI from "./ui";
+import { OralMedicine, InjectableMedicine, TopicalMedicine } from "./medicineClasses.js";
+import UI from "./ui.js";
 
 class MedicineManager {
   static medicineList = [];
