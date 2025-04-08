@@ -14,6 +14,50 @@ class MedicineManager {
     }
   }
 
+  static getMedicineDetails(medicine) {
+    const medicineDetails = {
+      header1: "",
+      text1: "",
+      header2: "",
+      text2: "",
+    };
+
+    switch (medicine.category) {
+      case "oral":
+        if (medicine.absorptionRate) {
+          medicineDetails.header1 = "Absorption Rate:";
+          medicineDetails.text1 = medicine.absorptionRate;
+        }
+        if (medicine.foodInteraction) {
+          medicineDetails.header2 = "Food Interaction:";
+          medicineDetails.text2 = medicine.foodInteraction;
+        }
+        return medicineDetails;
+      case "injectable":
+        if (medicine.injectionSite) {
+          medicineDetails.header1 = "Injection Site:";
+          medicineDetails.text1 = medicine.injectionSite;
+        }
+
+        if (medicine.onsetTime) {
+          medicineDetails.header2 = "Onset Time:";
+          medicineDetails.text2 = medicine.onsetTime;
+        }
+        return medicineDetails;
+      case "topical":
+        if (medicine.absorptionLevel) {
+          medicineDetails.header1 = "Absorption Level:";
+          medicineDetails.text1 = medicine.absorptionLevel;
+        }
+
+        if (medicine.residueType) {
+          medicineDetails.header2 = "Residue Type:";
+          medicineDetails.text2 = medicine.residueType;
+        }
+        return medicineDetails;
+    }
+  }
+
   static storeMedicines() {
     try {
       localStorage.setItem("medicineList", JSON.stringify(MedicineManager.medicineList));

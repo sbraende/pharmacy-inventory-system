@@ -1,7 +1,8 @@
-import MedicineManager from "./medicineManager.js";
-import appState from "./temp.js";
-import Validation from "./validation.js";
-import Utility from "./utility.js";
+import MedicineManager from "./medicineManager";
+import appState from "./appState";
+import Validation from "./validation";
+import Utility from "./utility";
+import DetailsModal from "./detailsModal";
 
 class UI {
   static addModal = document.querySelector(".add-modal");
@@ -207,38 +208,73 @@ class UI {
 
       const createDetailsCell = () => {
         const cell = document.createElement("td");
-        const paragraph1 = document.createElement("p");
-        const paragraph2 = document.createElement("p");
-        cell.append(paragraph1, paragraph2);
+        cell.classList.add("product-table__details-cell");
 
-        switch (medicine.category) {
-          case "oral":
-            paragraph1.textContent = medicine.absorptionRate
-              ? `Absorption Rate: ${medicine.absorptionRate}`
-              : "";
+        const infoIconButton = document.createElement("button");
+        infoIconButton.classList.add("product-table__details-button");
+        cell.append(infoIconButton);
 
-            paragraph2.textContent = medicine.foodInteraction
-              ? `Food Interaction: ${medicine.foodInteraction}`
-              : "";
-            break;
-          case "injectable":
-            console.log(medicine.onsetTime);
+        const infoIcon = document.createElement("img");
+        infoIcon.src = "/assets/icons/info-circle-solid.svg";
+        infoIcon.alt = "Info icon";
+        infoIcon.classList.add("product-table__details-icon");
+        infoIconButton.append(infoIcon);
+        let isDetailsShown = false;
 
-            paragraph1.textContent = medicine.injectionSite
-              ? `Injection Site: ${medicine.injectionSite}`
-              : "";
-            paragraph2.textContent = medicine.onsetTime ? `Onset Time: ${medicine.onsetTime}` : "";
-            break;
-          case "topical":
-            paragraph1.textContent = medicine.absorptionLevel
-              ? `Absorption Level: ${medicine.absorptionLevel}`
-              : "";
-            paragraph2.textContent = medicine.residueType
-              ? `Residue Type: ${medicine.residueType}`
-              : "";
-            break;
-        }
+        // Handle show details modal
+        infoIconButton.addEventListener("click", (e) => {
+          if (!isDetailsShown) {
+            // dispay info
+            DetailsModal.renderDetailsModal(
+              e.currentTarget,
+              MedicineManager.getMedicineDetails(medicine)
+            );
+            infoIcon.src = "/assets/icons/info-circle.svg";
+            isDetailsShown = true;
+          } else {
+            // hide info
+            infoIconButton.innerHTML = "";
+            infoIconButton.append(infoIcon); // reappend infoIcon
+            infoIcon.src = "/assets/icons/info-circle-solid.svg";
+            isDetailsShown = false;
+          }
+        });
+
         return cell;
+      };
+
+      const createEditCell = () => {
+        const editDeleteCell = document.createElement("td");
+        editDeleteCell.classList.add("product-table__edit-container");
+
+        const editButton = document.createElement("button");
+        editButton.classList.add("product-table__edit-buttons");
+
+        const editIcon = document.createElement("img");
+        editIcon.src = "/assets/icons/edit.svg";
+        editIcon.alt = "Edit icon";
+        editButton.append(editIcon);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("product-table__edit-buttons");
+
+        const deleteIcon = document.createElement("img");
+        deleteIcon.src = "/assets/icons/delete.svg";
+        deleteIcon.alt = "Delete icon";
+        deleteButton.append(deleteIcon);
+
+        editDeleteCell.append(editButton, deleteButton);
+
+        editButton.addEventListener("click", () => {
+          UI.editMedicine(medicine.id);
+        });
+
+        deleteButton.addEventListener("click", () => {
+          UI.openDeleteModal(medicine.name);
+          UI.handleConfirmDeleteButton(medicine.id);
+        });
+
+        return editDeleteCell;
       };
 
       row.append(
@@ -247,42 +283,11 @@ class UI {
         createCell(Utility.TimestampToDisplayDate(Date.parse(medicine.expirationDate))), // ISODate to Dateobject to Render Date
         createCell(medicine.quantity),
         createCell(medicine.category),
-        createDetailsCell()
+        createDetailsCell(),
+        createEditCell()
       );
 
-      // Create edit/delete buttons container
-      const editDeleteCell = document.createElement("td");
-      editDeleteCell.classList.add("product-table__edit-container");
-
-      const editButton = document.createElement("button");
-      editButton.classList.add("product-table__edit-buttons");
-
-      const editIcon = document.createElement("img");
-      editIcon.src = "/assets/icons/edit.svg";
-      editIcon.alt = "Edit icon";
-      editButton.append(editIcon);
-
-      const deleteButton = document.createElement("button");
-      deleteButton.classList.add("product-table__edit-buttons");
-
-      const deleteIcon = document.createElement("img");
-      deleteIcon.src = "/assets/icons/delete.svg";
-      deleteIcon.alt = "Delete icon";
-      deleteButton.append(deleteIcon);
-
-      editDeleteCell.append(editButton, deleteButton);
-      row.append(editDeleteCell);
-
       productTableBody.append(row);
-
-      editButton.addEventListener("click", () => {
-        UI.editMedicine(medicine.id);
-      });
-
-      deleteButton.addEventListener("click", () => {
-        UI.openDeleteModal(medicine.name);
-        UI.handleConfirmDeleteButton(medicine.id);
-      });
     });
   }
 
