@@ -26,7 +26,9 @@ class Validation {
 
     fieldsToValidate.forEach((field) => {
       const fieldInputElement = document.querySelector(`#${field.name}`);
-      const fieldInputError = document.querySelector(`.form__${field.name}-error`);
+      const fieldInputError = document.querySelector(
+        `.form__${field.name}-error`
+      );
       const formErrorMessage = document.querySelector(".form__error-message");
 
       formErrorMessage.classList.remove("form__error-message--show");
@@ -36,8 +38,6 @@ class Validation {
         fieldInputError.classList.add("form__input-error--show");
         fieldInputError.textContent = field.message;
 
-        formErrorMessage.classList.add("form__error-message--show");
-        formErrorMessage.textContent = "Please fill out highlighted fields";
         isValid = false;
       } else {
         fieldInputError.classList.remove("form__input-error--show");

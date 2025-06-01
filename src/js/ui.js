@@ -14,7 +14,9 @@ class UI {
 
   // Modal control
   static openFormModal() {
-    const medicineCategorySelect = document.querySelector(".form__medicine-category");
+    const medicineCategorySelect = document.querySelector(
+      ".form__medicine-category"
+    );
     UI.addModal.classList.add("show-flex");
 
     medicineCategorySelect.addEventListener("change", (e) => {
@@ -64,7 +66,9 @@ class UI {
 
     switch (category) {
       case "oral":
-        document.querySelector(".form__oral-medicaiton").classList.add("form__category--show");
+        document
+          .querySelector(".form__oral-medicaiton")
+          .classList.add("form__category--show");
         break;
       case "injectable":
         document
@@ -72,7 +76,9 @@ class UI {
           .classList.add("form__category--show");
         break;
       case "topical":
-        document.querySelector(".form__topical-medicaiton").classList.add("form__category--show");
+        document
+          .querySelector(".form__topical-medicaiton")
+          .classList.add("form__category--show");
         break;
     }
   }
@@ -83,10 +89,15 @@ class UI {
   }
 
   static handleConfirmDeleteButton(id) {
-    const deleteModalConfirmDeleteButton = document.querySelector(".delete-modal__confirm");
+    const deleteModalConfirmDeleteButton = document.querySelector(
+      ".delete-modal__confirm"
+    );
 
     if (appState.deleteState) {
-      deleteModalConfirmDeleteButton.removeEventListener("click", appState.deleteState);
+      deleteModalConfirmDeleteButton.removeEventListener(
+        "click",
+        appState.deleteState
+      );
     }
 
     appState.deleteState = () => {
@@ -95,31 +106,46 @@ class UI {
       appState.deleteState = null;
     };
 
-    deleteModalConfirmDeleteButton.addEventListener("click", appState.deleteState);
+    deleteModalConfirmDeleteButton.addEventListener(
+      "click",
+      appState.deleteState
+    );
   }
 
   static getMedicineInputs() {
     return {
       nameInput: document.querySelector(".form__name-input"),
       manufacturerInput: document.querySelector(".form__manufacturer-input"),
-      expirationDateInput: document.querySelector(".form__expiration-date-input"),
+      expirationDateInput: document.querySelector(
+        ".form__expiration-date-input"
+      ),
       quantityInput: document.querySelector(".form__quantity-input"),
-      medicineCategorySelect: document.querySelector(".form__medicine-category"),
+      medicineCategorySelect: document.querySelector(
+        ".form__medicine-category"
+      ),
 
-      absorptionRateInput: document.querySelector(".form__absorption-rate-input"),
-      foodInteractionInput: document.querySelector(".form__food-interaction-input"),
+      absorptionRateInput: document.querySelector(
+        ".form__absorption-rate-input"
+      ),
+      foodInteractionInput: document.querySelector(
+        ".form__food-interaction-input"
+      ),
 
       injectionSiteInput: document.querySelector(".form__injection-site-input"),
       onsetTimeInput: document.querySelector(".form__onset-time-input"),
 
-      absorptionLevelInput: document.querySelector(".form__absorption-level-input"),
+      absorptionLevelInput: document.querySelector(
+        ".form__absorption-level-input"
+      ),
       residueTypeInput: document.querySelector(".form__residue-type-input"),
     };
   }
 
   // Form/modal setup
   static initFormModal() {
-    const addMedicineButton = document.querySelector(".inventory__add-new-product-button");
+    const addMedicineButton = document.querySelector(
+      ".inventory__add-new-product-button"
+    );
     const formCancelButton = document.querySelector(".form__cancel-button");
 
     addMedicineButton.addEventListener("click", () => {
@@ -172,11 +198,15 @@ class UI {
     medicineInputs.quantityInput.value = currentMedicine.quantity;
     medicineInputs.medicineCategorySelect.value = currentMedicine.category;
 
-    medicineInputs.absorptionRateInput.value = currentMedicine.absorptionRate || "";
-    medicineInputs.foodInteractionInput.value = currentMedicine.foodInteraction || "";
-    medicineInputs.injectionSiteInput.value = currentMedicine.injectionSite || "";
+    medicineInputs.absorptionRateInput.value =
+      currentMedicine.absorptionRate || "";
+    medicineInputs.foodInteractionInput.value =
+      currentMedicine.foodInteraction || "";
+    medicineInputs.injectionSiteInput.value =
+      currentMedicine.injectionSite || "";
     medicineInputs.onsetTimeInput.value = currentMedicine.onsetTime || "";
-    medicineInputs.absorptionLevelInput.value = currentMedicine.absorptionLevel || "";
+    medicineInputs.absorptionLevelInput.value =
+      currentMedicine.absorptionLevel || "";
     medicineInputs.residueTypeInput.value = currentMedicine.residueType || "";
 
     UI.renderFormCategories(medicineInputs.medicineCategorySelect.value);
@@ -197,98 +227,111 @@ class UI {
     const productTableBody = document.querySelector(".product-table__body");
     productTableBody.innerHTML = "";
 
-    medicineList.forEach((medicine) => {
+    if (medicineList.length === 0) {
       const row = document.createElement("tr");
+      const cell = document.createElement("td");
+      cell.colSpan = 7;
+      cell.textContent = "Click '+' button to add medicine";
+      cell.style.textAlign = "center";
 
-      const createCell = (text) => {
-        const cell = document.createElement("td");
-        cell.textContent = text;
-        return cell;
-      };
-
-      const createDetailsCell = () => {
-        const cell = document.createElement("td");
-        cell.classList.add("product-table__details-cell");
-
-        const infoIconButton = document.createElement("button");
-        infoIconButton.classList.add("product-table__details-button");
-        cell.append(infoIconButton);
-
-        const infoIcon = document.createElement("img");
-        infoIcon.src = "/assets/icons/info-circle-solid.svg";
-        infoIcon.alt = "Info icon";
-        infoIcon.classList.add("product-table__details-icon");
-        infoIconButton.append(infoIcon);
-        let isDetailsShown = false;
-
-        // Handle show details modal
-        infoIconButton.addEventListener("click", (e) => {
-          if (!isDetailsShown) {
-            // dispay info
-            DetailsModal.renderDetailsModal(
-              e.currentTarget,
-              MedicineManager.getMedicineDetails(medicine)
-            );
-            infoIcon.src = "/assets/icons/info-circle.svg";
-            isDetailsShown = true;
-          } else {
-            // hide info
-            infoIconButton.innerHTML = "";
-            infoIconButton.append(infoIcon); // reappend infoIcon
-            infoIcon.src = "/assets/icons/info-circle-solid.svg";
-            isDetailsShown = false;
-          }
-        });
-
-        return cell;
-      };
-
-      const createEditCell = () => {
-        const editDeleteCell = document.createElement("td");
-        editDeleteCell.classList.add("product-table__edit-container");
-
-        const editButton = document.createElement("button");
-        editButton.classList.add("product-table__edit-buttons");
-
-        const editIcon = document.createElement("img");
-        editIcon.src = "/assets/icons/edit.svg";
-        editIcon.alt = "Edit icon";
-        editButton.append(editIcon);
-
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("product-table__edit-buttons");
-
-        const deleteIcon = document.createElement("img");
-        deleteIcon.src = "/assets/icons/delete.svg";
-        deleteIcon.alt = "Delete icon";
-        deleteButton.append(deleteIcon);
-
-        editDeleteCell.append(editButton, deleteButton);
-
-        editButton.addEventListener("click", () => {
-          UI.editMedicine(medicine.id);
-        });
-
-        deleteButton.addEventListener("click", () => {
-          UI.openDeleteModal(medicine.name);
-          UI.handleConfirmDeleteButton(medicine.id);
-        });
-
-        return editDeleteCell;
-      };
-
-      row.append(
-        createCell(medicine.name),
-        createCell(medicine.manufacturer),
-        createCell(Utility.TimestampToDisplayDate(Date.parse(medicine.expirationDate))), // ISODate to Dateobject to Render Date
-        createCell(medicine.quantity),
-        createCell(medicine.category),
-        createDetailsCell(),
-        createEditCell()
-      );
-
+      row.append(cell);
       productTableBody.append(row);
-    });
+    } else {
+      medicineList.forEach((medicine) => {
+        const row = document.createElement("tr");
+
+        const createCell = (text) => {
+          const cell = document.createElement("td");
+          cell.textContent = text;
+          return cell;
+        };
+
+        const createDetailsCell = () => {
+          const cell = document.createElement("td");
+          cell.classList.add("product-table__details-cell");
+
+          const infoIconButton = document.createElement("button");
+          infoIconButton.classList.add("product-table__details-button");
+          cell.append(infoIconButton);
+
+          const infoIcon = document.createElement("img");
+          infoIcon.src = "/assets/icons/info-circle-solid.svg";
+          infoIcon.alt = "Info icon";
+          infoIcon.classList.add("product-table__details-icon");
+          infoIconButton.append(infoIcon);
+          let isDetailsShown = false;
+
+          // Handle show details modal
+          infoIconButton.addEventListener("click", (e) => {
+            if (!isDetailsShown) {
+              // dispay info
+              DetailsModal.renderDetailsModal(
+                e.currentTarget,
+                MedicineManager.getMedicineDetails(medicine)
+              );
+              infoIcon.src = "/assets/icons/info-circle.svg";
+              isDetailsShown = true;
+            } else {
+              // hide info
+              infoIconButton.innerHTML = "";
+              infoIconButton.append(infoIcon); // reappend infoIcon
+              infoIcon.src = "/assets/icons/info-circle-solid.svg";
+              isDetailsShown = false;
+            }
+          });
+
+          return cell;
+        };
+
+        const createEditCell = () => {
+          const editDeleteCell = document.createElement("td");
+          editDeleteCell.classList.add("product-table__edit-container");
+
+          const editButton = document.createElement("button");
+          editButton.classList.add("product-table__edit-buttons");
+
+          const editIcon = document.createElement("img");
+          editIcon.src = "/assets/icons/edit.svg";
+          editIcon.alt = "Edit icon";
+          editButton.append(editIcon);
+
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add("product-table__edit-buttons");
+
+          const deleteIcon = document.createElement("img");
+          deleteIcon.src = "/assets/icons/delete.svg";
+          deleteIcon.alt = "Delete icon";
+          deleteButton.append(deleteIcon);
+
+          editDeleteCell.append(editButton, deleteButton);
+
+          editButton.addEventListener("click", () => {
+            UI.editMedicine(medicine.id);
+          });
+
+          deleteButton.addEventListener("click", () => {
+            UI.openDeleteModal(medicine.name);
+            UI.handleConfirmDeleteButton(medicine.id);
+          });
+
+          return editDeleteCell;
+        };
+
+        row.append(
+          createCell(medicine.name),
+          createCell(medicine.manufacturer),
+          createCell(
+            Utility.TimestampToDisplayDate(Date.parse(medicine.expirationDate))
+          ), // ISODate to Dateobject to Render Date
+          createCell(medicine.quantity),
+          createCell(medicine.category),
+          createDetailsCell(),
+          createEditCell()
+        );
+
+        productTableBody.append(row);
+      });
+    }
   }
 
   // App bootstrap

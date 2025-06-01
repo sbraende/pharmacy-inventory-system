@@ -1,4 +1,8 @@
-import { OralMedicine, InjectableMedicine, TopicalMedicine } from "./medicineClasses.js";
+import {
+  OralMedicine,
+  InjectableMedicine,
+  TopicalMedicine,
+} from "./medicineClasses.js";
 import UI from "./ui.js";
 
 class MedicineManager {
@@ -6,7 +10,8 @@ class MedicineManager {
 
   static getMedicine() {
     try {
-      MedicineManager.medicineList = JSON.parse(localStorage.getItem("medicineList")) || [];
+      MedicineManager.medicineList =
+        JSON.parse(localStorage.getItem("medicineList")) || [];
       return MedicineManager.medicineList;
     } catch (error) {
       UI.openErrorModal("Could not get medicine from local storage");
@@ -60,7 +65,10 @@ class MedicineManager {
 
   static storeMedicines() {
     try {
-      localStorage.setItem("medicineList", JSON.stringify(MedicineManager.medicineList));
+      localStorage.setItem(
+        "medicineList",
+        JSON.stringify(MedicineManager.medicineList)
+      );
     } catch (error) {
       UI.openErrorModal("Could not store medicine in local storage");
       console.error("Could not store medicine in local storage", error);
@@ -79,8 +87,8 @@ class MedicineManager {
           new Date(medicineInputs.expirationDateInput.value).toISOString(),
           medicineInputs.quantityInput.value,
           medicineInputs.medicineCategorySelect.value,
-          medicineInputs.absorptionRateInput.value,
-          medicineInputs.foodInteractionInput.value
+          medicineInputs.absorptionRateInput.value.trim(),
+          medicineInputs.foodInteractionInput.value.trim()
         );
         break;
       case "injectable":
@@ -90,8 +98,8 @@ class MedicineManager {
           new Date(medicineInputs.expirationDateInput.value).toISOString(),
           medicineInputs.quantityInput.value,
           medicineInputs.medicineCategorySelect.value,
-          medicineInputs.injectionSiteInput.value,
-          medicineInputs.onsetTimeInput.value
+          medicineInputs.injectionSiteInput.value.trim(),
+          medicineInputs.onsetTimeInput.value.trim()
         );
         break;
       case "topical":
@@ -101,8 +109,8 @@ class MedicineManager {
           new Date(medicineInputs.expirationDateInput.value).toISOString(),
           medicineInputs.quantityInput.value,
           medicineInputs.medicineCategorySelect.value,
-          medicineInputs.absorptionLevelInput.value,
-          medicineInputs.residueTypeInput.value
+          medicineInputs.absorptionLevelInput.value.trim(),
+          medicineInputs.residueTypeInput.value.trim()
         );
         break;
     }
@@ -114,7 +122,9 @@ class MedicineManager {
   static editMedicineData(id, medicineInputs) {
     MedicineManager.medicineList = MedicineManager.getMedicine();
 
-    const medicineIndex = MedicineManager.medicineList.findIndex((medicine) => medicine.id === id);
+    const medicineIndex = MedicineManager.medicineList.findIndex(
+      (medicine) => medicine.id === id
+    );
     if (medicineIndex === -1) return;
 
     let updatedMedicine;
